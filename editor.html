@@ -102,19 +102,55 @@ function menuJs(){return 'window.KENNEDY_MENU = '+JSON.stringify(data,null,2)+';
 function refreshPreview(){localStorage.setItem('kennedyPreviewData',JSON.stringify(data));$('#preview').src='index.html?preview='+Date.now()}
 function downloadText(name,text,type){const blob=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 function utf8ToBase64(text){const bytes=new TextEncoder().encode(text);let binary='';const chunk=0x8000;for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));return btoa(binary)}
-async function githubRequest(url,token,opts={}){const headers={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10',...(opts.headers||{})};if(token)headers.Authorization='Bearer '+token;const res=await fetch(url,{...opts,headers});let body=null;try{body=await res.json()}catch(e){}if(!res.ok)throw new Error((body&&body.message)||`GitHub returned ${res.status}`);return body}
+async function githubRequest(url,token,opts={}){
+  const headers={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Cache-Control':'no-cache',...(opts.headers||{})};
+  if(token)headers.Authorization='Bearer '+token;
+  const res=await fetch(url,{cache:'no-store',...opts,headers});
+  let body=null;try{body=await res.json()}catch(e){}
+  if(!res.ok){const err=new Error((body&&body.message)||`GitHub returned ${res.status}`);err.status=res.status;err.body=body;throw err}
+  return body
+}
+async function getCurrentFile(base,branch,token){
+  const url=base+'?ref='+encodeURIComponent(branch)+'&_='+Date.now();
+  try{return await githubRequest(url,token)}catch(e){if(e.status===404)return null;throw e}
+}
+async function putMenu(base,branch,token,sha){
+  const body={message:'Update concession menu from menu editor',content:utf8ToBase64(menuJs()),branch};
+  if(sha)body.sha=sha;
+  return githubRequest(base,token,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+}
 async function publish(){
   const owner=$('#ghOwner').value.trim(),repo=$('#ghRepo').value.trim(),branch=$('#ghBranch').value.trim()||'main',token=$('#ghToken').value.trim();
   if(!owner||!repo||!token){setStatus('Enter the GitHub owner, repository and fine-grained token first.','err');return}
   sessionStorage.setItem('kennedyGhToken',token);sessionStorage.setItem('kennedyGhOwner',owner);sessionStorage.setItem('kennedyGhRepo',repo);sessionStorage.setItem('kennedyGhBranch',branch);
   const base=`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/menu-data.js`;
+  const js=menuJs();
+  const sizeKB=Math.round(new Blob([js]).size/1024);
+  if(sizeKB>5000&&!confirm(`Your menu file is about ${sizeKB} KB because of embedded images. Publishing may take a little longer. Continue?`))return;
   try{
+    setStatus('Checking the current GitHub version of menu-data.js…','work');
+    let current=await getCurrentFile(base,branch,token);
+    let sha=current&&current.sha?current.sha:'';
     setStatus('Publishing menu to GitHub…','work');
-    let sha='';try{const existing=await githubRequest(base+'?ref='+encodeURIComponent(branch),token);sha=existing.sha||''}catch(e){if(!/404/.test(e.message))throw e}
-    const body={message:'Update concession menu from menu editor',content:utf8ToBase64(menuJs()),branch};if(sha)body.sha=sha;
-    await githubRequest(base,token,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    setStatus('Published successfully. GitHub Pages is rebuilding now. Refresh the TV menu in about 30–60 seconds.','ok');refreshPreview();
-  }catch(err){setStatus('Publish failed: '+err.message+'. Check that the token has Contents: Read and write access to this repository.','err')}
+    try{
+      await putMenu(base,branch,token,sha);
+    }catch(e){
+      if(e.status===409 || /does not match|sha/i.test(e.message||'')){
+        setStatus('GitHub changed the file version while publishing. Refreshing the current SHA and retrying once…','work');
+        current=await getCurrentFile(base,branch,token);
+        sha=current&&current.sha?current.sha:'';
+        await putMenu(base,branch,token,sha);
+      }else{throw e}
+    }
+    setStatus('Published successfully. GitHub Pages is rebuilding now. Refresh the TV menu in about 30–60 seconds.','ok');
+    refreshPreview();
+  }catch(err){
+    let hint='';
+    if(err.status===401)hint=' The token was rejected. Re-enter the token.';
+    else if(err.status===403)hint=' Confirm the token is limited to this repository and has Contents: Read and write.';
+    else if(err.status===404)hint=' Confirm owner, repository, branch, and repository access on the token.';
+    setStatus('Publish failed: '+err.message+'.'+hint,'err')
+  }
 }
 $('#previewBtn').onclick=refreshPreview;
 $('#download').onclick=()=>downloadText('menu-data.js',menuJs(),'text/javascript');
