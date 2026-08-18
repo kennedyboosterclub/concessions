@@ -103,9 +103,19 @@ function refreshPreview(){localStorage.setItem('kennedyPreviewData',JSON.stringi
 function downloadText(name,text,type){const blob=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 function utf8ToBase64(text){const bytes=new TextEncoder().encode(text);let binary='';const chunk=0x8000;for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));return btoa(binary)}
 async function githubRequest(url,token,opts={}){
-  const headers={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Cache-Control':'no-cache',...(opts.headers||{})};
+  // Keep cross-origin GitHub API requests intentionally minimal. Extra request
+  // headers can force a CORS preflight and cause browsers to report only
+  // "Failed to fetch" before GitHub ever receives the request.
+  const headers={'Accept':'application/vnd.github+json',...(opts.headers||{})};
   if(token)headers.Authorization='Bearer '+token;
-  const res=await fetch(url,{cache:'no-store',...opts,headers});
+  let res;
+  try{
+    res=await fetch(url,{...opts,headers,mode:'cors',credentials:'omit'});
+  }catch(networkErr){
+    const err=new Error('Browser could not reach the GitHub API. This is usually a browser/CORS/network block, not a bad token. Try reloading the editor, disabling content blockers for this page, or using Chrome/Silk. Technical detail: '+networkErr.message);
+    err.network=true;
+    throw err;
+  }
   let body=null;try{body=await res.json()}catch(e){}
   if(!res.ok){const err=new Error((body&&body.message)||`GitHub returned ${res.status}`);err.status=res.status;err.body=body;throw err}
   return body
@@ -146,7 +156,8 @@ async function publish(){
     refreshPreview();
   }catch(err){
     let hint='';
-    if(err.status===401)hint=' The token was rejected. Re-enter the token.';
+    if(err.network)hint=' GitHub did not return an HTTP status, so this is a browser/network request problem rather than a SHA conflict.';
+    else if(err.status===401)hint=' The token was rejected. Re-enter the token.';
     else if(err.status===403)hint=' Confirm the token is limited to this repository and has Contents: Read and write.';
     else if(err.status===404)hint=' Confirm owner, repository, branch, and repository access on the token.';
     setStatus('Publish failed: '+err.message+'.'+hint,'err')
@@ -157,6 +168,18 @@ $('#download').onclick=()=>downloadText('menu-data.js',menuJs(),'text/javascript
 $('#exportJson').onclick=()=>downloadText('kennedy-menu-backup.json',JSON.stringify(data,null,2),'application/json');
 $('#importJson').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);bindTop();renderSections();refreshPreview();setStatus('Backup restored.','ok')}catch(err){setStatus('That backup file could not be read.','err')}};r.readAsText(f)};
 $('#reset').onclick=()=>{if(confirm('Reset all menu edits back to the currently published menu?')){data=JSON.parse(JSON.stringify(original));bindTop();renderSections();refreshPreview()}};
+$('#testGithub').onclick=async()=>{
+  const owner=$('#ghOwner').value.trim(),repo=$('#ghRepo').value.trim(),branch=$('#ghBranch').value.trim()||'main',token=$('#ghToken').value.trim();
+  if(!owner||!repo||!token){setStatus('Enter the GitHub owner, repository and token first.','err');return}
+  sessionStorage.setItem('kennedyGhToken',token);
+  const base=`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/menu-data.js`;
+  try{
+    setStatus('Testing connection to GitHub…','work');
+    const current=await getCurrentFile(base,branch,token);
+    if(current&&current.sha)setStatus('GitHub connection successful. Current menu-data.js SHA: '+current.sha.slice(0,10)+'…','ok');
+    else setStatus('GitHub connection successful. menu-data.js is not present yet and will be created on publish.','ok');
+  }catch(err){setStatus('GitHub connection test failed: '+err.message,'err')}
+};
 $('#publish').onclick=publish;
 $('#forgetToken').onclick=()=>{$('#ghToken').value='';sessionStorage.removeItem('kennedyGhToken');setStatus('GitHub token forgotten for this browser session.','ok')};
 $('#clearPaymentQr').onclick=()=>{data.paymentQr='';$('#paymentQr').value='';previewImg($('#paymentQrPreview'),'')};

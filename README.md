@@ -20,3 +20,7 @@ The editor does not place your token in the repository or menu data. It stores t
 
 ## Manual fallback
 The editor can still download `menu-data.js`. If direct publishing is ever unavailable, upload that one file to the repository root and commit it manually.
+
+
+## v6 publishing fix
+The editor now uses minimal CORS-safe GitHub REST API headers and includes a **Test GitHub Connection** button. Test the connection before publishing.
