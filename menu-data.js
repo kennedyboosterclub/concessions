@@ -69,7 +69,7 @@ window.KENNEDY_MENU = {
       "name": "RICE CRISPY BARS",
       "price": "1",
       "image": "assets/ricecrispy.png",
-      "outOfStock": true
+      "outOfStock": false
     },
     {
       "name": "GRANOLA BARS",
