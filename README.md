@@ -17,3 +17,9 @@ GitHub Pages/browser caching may briefly show the older editor. After the commit
 The `?v=7` is only a cache-buster. You can later use the normal editor URL.
 
 Before publishing, click **Test GitHub Connection**. A successful test confirms that the browser can read `menu-data.js` with the token. The token needs repository `Contents: Read and write` access.
+
+## v8 changes
+- Menu sections no longer cap Hot Food/Drinks/Snacks/Candy at the original item counts.
+- Visible rows automatically resize to fill each section as items are added or hidden.
+- Every editable item has an IN STOCK / OUT OF STOCK toggle.
+- OUT OF STOCK items remain saved in the editor but are hidden on the TV menu.

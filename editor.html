@@ -82,21 +82,22 @@ async function bindQrUpload(inputId,key,previewId){$('#'+inputId).onchange=async
 function renderSections(){
   const root=$('#sections');root.innerHTML='';
   defs.forEach(([key,label])=>{
-    const card=document.createElement('div');card.className='card';card.innerHTML=`<h2>${label}</h2><div class="rows"></div><button class="btn alt add">Add Item</button>`;
+    const card=document.createElement('div');card.className='card';card.innerHTML=`<h2>${label}</h2><p class="help">Items marked OUT OF STOCK stay in the editor but are hidden from the TV menu. Remaining items automatically expand to fill the section.</p><div class="rows"></div><button class="btn alt add">Add Item</button>`;
     const rows=card.querySelector('.rows');
     function redraw(){
       rows.innerHTML='';
       (data[key]||[]).forEach((i,n)=>{
         const r=document.createElement('div');r.className='row';
-        r.innerHTML=`<label>Item<input value="${esc(i.name)}"></label><label>Price<input value="${esc(i.price)}"></label><label class="wide">Description<input value="${esc(i.description||'')}"></label><div class="image-cell"><label>Product image</label><div class="image-tools"><img class="thumb" alt="Product preview"><div><input class="image-url" value="${esc(i.image||'')}" placeholder="Image URL or embedded image"><div class="image-actions"><label class="upload-label">Choose Image<input class="image-upload" type="file" accept="image/*"></label><button type="button" class="mini clear-image">Clear</button></div></div></div></div><button class="btn warn remove">Remove</button>`;
+        r.innerHTML=`<label>Item<input value="${esc(i.name)}"></label><label>Price<input value="${esc(i.price)}"></label><label class="wide">Description<input value="${esc(i.description||'')}"></label><div class="image-cell"><label>Product image</label><div class="image-tools"><img class="thumb" alt="Product preview"><div><input class="image-url" value="${esc(i.image||'')}" placeholder="Image URL or embedded image"><div class="image-actions"><label class="upload-label">Choose Image<input class="image-upload" type="file" accept="image/*"></label><button type="button" class="mini clear-image">Clear</button></div></div></div></div><button type="button" class="btn stock-btn ${i.outOfStock?'out':'in'}">${i.outOfStock?'OUT OF STOCK':'IN STOCK'}</button><button class="btn warn remove">Remove</button>`;
         const ins=r.querySelectorAll('input:not([type=file])');ins[0].oninput=e=>i.name=e.target.value;ins[1].oninput=e=>i.price=e.target.value;ins[2].oninput=e=>i.description=e.target.value;
         const url=r.querySelector('.image-url'),thumb=r.querySelector('.thumb');previewImg(thumb,i.image);url.oninput=e=>{i.image=e.target.value;previewImg(thumb,i.image)};
         r.querySelector('.image-upload').onchange=async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;setStatus(`Processing ${i.name||'product'} image…`,'work');try{i.image=await imageFileToDataUrl(f);url.value=i.image;previewImg(thumb,i.image);setStatus('Product image added.','ok')}catch(err){setStatus('Could not process that image: '+err.message,'err')}e.target.value=''};
         r.querySelector('.clear-image').onclick=()=>{i.image='';url.value='';previewImg(thumb,'')};
-        r.querySelector('.remove').onclick=()=>{data[key].splice(n,1);redraw()};rows.appendChild(r)
+        r.querySelector('.stock-btn').onclick=()=>{i.outOfStock=!i.outOfStock;redraw();refreshPreview()};
+        r.querySelector('.remove').onclick=()=>{data[key].splice(n,1);redraw();refreshPreview()};rows.appendChild(r)
       })
     }
-    redraw();card.querySelector('.add').onclick=()=>{(data[key]||(data[key]=[])).push({name:'NEW ITEM',price:'0',description:'',image:''});redraw()};root.appendChild(card)
+    redraw();card.querySelector('.add').onclick=()=>{(data[key]||(data[key]=[])).push({name:'NEW ITEM',price:'0',description:'',image:'',outOfStock:false});redraw();refreshPreview()};root.appendChild(card)
   })
 }
 function menuJs(){return 'window.KENNEDY_MENU = '+JSON.stringify(data,null,2)+';\n'}
