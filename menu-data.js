@@ -107,7 +107,7 @@ window.KENNEDY_MENU = {
     },
     {
       "name": "PIZZA MEAL",
-      "price": "9",
+      "price": "8",
       "description": "Pizza slice, chips & Gatorade or soda",
       "image": "assets/pizza.png"
     }
