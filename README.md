@@ -1,25 +1,12 @@
-# Kennedy Football Concessions – v7 editor fix
+# Kennedy Concessions v9
 
-Upload all files/folders in this package to the existing `kennedyboosterclub/concessions` repository and replace the existing versions.
+Changes in v9:
+- Hot Food now uses the correct available height and dynamically fits added items instead of clipping the bottom row.
+- Game Day Fuel is replaced by an editable Breakfast category.
+- Uncrustables moved to Breakfast and Donuts $2 added.
+- Coffee $2 and Red Bull $4 added to Drinks.
+- Meal Deals dynamically render as 2 or 3 equal columns; editor limits Meal Deals to a maximum of 3.
+- Existing In Stock / Out of Stock controls remain available for every item.
+- GitHub Test Connection and direct Publish remain enabled.
 
-## What v7 fixes
-- Restores all five editable product groups: Hot Food, Drinks, Snacks, Candy, and Meal Deals.
-- Adds the missing **Test GitHub Connection** button.
-- Initializes the product editor before GitHub publishing controls, so a publishing-script issue cannot make the product sections disappear.
-- Keeps product photo upload, QR upload, descriptions, prices, add/remove item controls, preview, backup/restore, and direct publishing.
-- GitHub publishing fetches the current `menu-data.js` SHA before every update and retries one SHA conflict automatically.
-
-## After upload
-GitHub Pages/browser caching may briefly show the older editor. After the commit finishes, open:
-
-`https://kennedyboosterclub.github.io/concessions/editor.html?v=7`
-
-The `?v=7` is only a cache-buster. You can later use the normal editor URL.
-
-Before publishing, click **Test GitHub Connection**. A successful test confirms that the browser can read `menu-data.js` with the token. The token needs repository `Contents: Read and write` access.
-
-## v8 changes
-- Menu sections no longer cap Hot Food/Drinks/Snacks/Candy at the original item counts.
-- Visible rows automatically resize to fill each section as items are added or hidden.
-- Every editable item has an IN STOCK / OUT OF STOCK toggle.
-- OUT OF STOCK items remain saved in the editor but are hidden on the TV menu.
+Upload all files/folders over the existing GitHub repository files, including menu-data.js and assets. Then open editor.html?v=9 to bypass cache.

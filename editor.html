@@ -59,9 +59,11 @@
 <script>
 const original=window.KENNEDY_MENU||{};
 let data=JSON.parse(JSON.stringify(original));
+function migrateV9(){if((data.schemaVersion||0)>=9)return;data.breakfast=Array.isArray(data.breakfast)?data.breakfast:[];data.snacks=Array.isArray(data.snacks)?data.snacks:[];const u=data.snacks.find(i=>/UNCRUSTABLE/i.test(i.name||''));if(u&&!data.breakfast.some(i=>/UNCRUSTABLE/i.test(i.name||''))){data.breakfast.push(u);data.snacks=data.snacks.filter(i=>i!==u)}if(!data.breakfast.some(i=>/DONUT/i.test(i.name||'')))data.breakfast.push({name:'DONUTS',price:'2',description:'',image:'assets/donuts.svg',outOfStock:false});data.drinks=Array.isArray(data.drinks)?data.drinks:[];if(!data.drinks.some(i=>/COFFEE/i.test(i.name||'')))data.drinks.push({name:'COFFEE',price:'2',description:'',image:'assets/coffee.svg',outOfStock:false});if(!data.drinks.some(i=>/RED BULL/i.test(i.name||'')))data.drinks.push({name:'RED BULL',price:'4',description:'',image:'assets/redbull.svg',outOfStock:false});data.schemaVersion=9;}
+migrateV9();
 const $=s=>document.querySelector(s);
 const topKeys=['title','subtitle','tagline','footer','payments','programText','paymentQr','programQr'];
-const defs=[['hotFood','Hot Food'],['drinks','Drinks'],['snacks','Snacks'],['candy','Candy'],['meals','Meal Deals']];
+const defs=[['hotFood','Hot Food'],['drinks','Drinks'],['snacks','Snacks'],['breakfast','Breakfast'],['candy','Candy'],['meals','Meal Deals']];
 function esc(s=''){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
 function setStatus(msg,type='work'){const e=$('#status');e.className='status '+type;e.textContent=msg}
 function previewImg(el,src){el.src=src||'';el.style.visibility=src?'visible':'hidden'}
@@ -82,7 +84,7 @@ async function bindQrUpload(inputId,key,previewId){$('#'+inputId).onchange=async
 function renderSections(){
   const root=$('#sections');root.innerHTML='';
   defs.forEach(([key,label])=>{
-    const card=document.createElement('div');card.className='card';card.innerHTML=`<h2>${label}</h2><p class="help">Items marked OUT OF STOCK stay in the editor but are hidden from the TV menu. Remaining items automatically expand to fill the section.</p><div class="rows"></div><button class="btn alt add">Add Item</button>`;
+    const card=document.createElement('div');card.className='card';const mealNote=key==='meals'?' Meal Deals support a maximum of 3 items and automatically resize to 2 or 3 columns on the TV.':'';card.innerHTML=`<h2>${label}</h2><p class="help">Items marked OUT OF STOCK stay in the editor but are hidden from the TV menu. Remaining items automatically expand to fill the section.${mealNote}</p><div class="rows"></div><button class="btn alt add">Add Item</button>`;
     const rows=card.querySelector('.rows');
     function redraw(){
       rows.innerHTML='';
@@ -94,10 +96,10 @@ function renderSections(){
         r.querySelector('.image-upload').onchange=async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;setStatus(`Processing ${i.name||'product'} image…`,'work');try{i.image=await imageFileToDataUrl(f);url.value=i.image;previewImg(thumb,i.image);setStatus('Product image added.','ok')}catch(err){setStatus('Could not process that image: '+err.message,'err')}e.target.value=''};
         r.querySelector('.clear-image').onclick=()=>{i.image='';url.value='';previewImg(thumb,'')};
         r.querySelector('.stock-btn').onclick=()=>{i.outOfStock=!i.outOfStock;redraw();refreshPreview()};
-        r.querySelector('.remove').onclick=()=>{data[key].splice(n,1);redraw();refreshPreview()};rows.appendChild(r)
+        r.querySelector('.remove').onclick=()=>{data[key].splice(n,1);redraw();const b=card.querySelector('.add');if(key==='meals'&&b){b.disabled=(data[key]||[]).length>=3;b.textContent=b.disabled?'Maximum 3 Meal Deals':'Add Meal Deal'}refreshPreview()};rows.appendChild(r)
       })
     }
-    redraw();card.querySelector('.add').onclick=()=>{(data[key]||(data[key]=[])).push({name:'NEW ITEM',price:'0',description:'',image:'',outOfStock:false});redraw();refreshPreview()};root.appendChild(card)
+    redraw();const addBtn=card.querySelector('.add');const updateAdd=()=>{if(key==='meals'){addBtn.disabled=(data[key]||[]).length>=3;addBtn.textContent=addBtn.disabled?'Maximum 3 Meal Deals':'Add Meal Deal'}else addBtn.textContent='Add Item'};updateAdd();addBtn.onclick=()=>{if(key==='meals'&&(data[key]||[]).length>=3){setStatus('Meal Deals are limited to a maximum of 3.','err');return}(data[key]||(data[key]=[])).push({name:'NEW ITEM',price:'0',description:'',image:'',outOfStock:false});redraw();updateAdd();refreshPreview()};root.appendChild(card)
   })
 }
 function menuJs(){return 'window.KENNEDY_MENU = '+JSON.stringify(data,null,2)+';\n'}
