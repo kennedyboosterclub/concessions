@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kennedy Football Concessions</title>
+  <style>
+    :root{--navy:#071a3d;--blue:#0b2f6b;--gold:#f6c500;--white:#fff;--muted:#c8d3e6;}
+    *{box-sizing:border-box} body{margin:0;background:var(--navy);color:#fff;font-family:Arial,Helvetica,sans-serif;overflow:hidden}
+    .screen{width:100vw;height:100vh;display:grid;grid-template-rows:auto auto 1fr auto;background:linear-gradient(180deg,#0b2f6b 0%,#071a3d 45%,#06162f 100%)}
+    header{display:flex;align-items:center;justify-content:center;gap:24px;padding:14px 22px 6px;text-align:center}
+    .logo{width:92px;height:92px;object-fit:contain;display:none}.brand h1{margin:0;font-size:clamp(42px,5.2vw,92px);letter-spacing:3px;color:var(--gold);text-shadow:0 3px 0 #fff,0 6px 0 #071a3d}.brand h2{margin:0;font-size:clamp(22px,2.2vw,40px);letter-spacing:6px}
+    .banner{background:var(--gold);color:var(--navy);font-weight:800;text-align:center;padding:8px 16px;font-size:clamp(18px,1.7vw,32px);letter-spacing:1px}
+    .main{display:grid;grid-template-columns:repeat(4,1fr) 1.08fr;gap:14px;padding:16px 22px 10px;min-height:0}
+    .cat{border-right:2px solid var(--gold);padding-right:14px;min-width:0}.cat:last-of-type{border-right:none}.cat h3,.side h3{margin:0 0 10px;font-size:clamp(24px,2vw,36px);font-style:italic;border-bottom:4px solid var(--gold);padding-bottom:6px}
+    .items{display:grid;gap:8px}.item{display:flex;gap:10px;justify-content:space-between;align-items:flex-start;font-size:clamp(17px,1.45vw,28px);font-weight:700}.item .name{max-width:72%}.item .price{color:var(--gold);white-space:nowrap}.item small{display:block;color:var(--muted);font-size:.68em;font-weight:400;margin-top:2px}
+    .sold{opacity:.35;text-decoration:line-through}.side{display:grid;gap:12px;align-content:start}.panel{border:3px solid var(--gold);border-radius:14px;overflow:hidden;background:rgba(7,26,61,.88)}.panel h4{margin:0;background:var(--gold);color:var(--navy);padding:8px 12px;text-align:center;font-size:clamp(18px,1.5vw,28px)}.panel .body{padding:12px;text-align:center;font-size:clamp(14px,1.15vw,22px)}.qr{width:min(150px,75%);aspect-ratio:1;background:white;margin:8px auto;border-radius:8px;padding:6px;display:none}.qr img{width:100%;height:100%;object-fit:contain}
+    footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-top:2px solid rgba(255,255,255,.4);font-size:clamp(16px,1.45vw,28px)}footer>div{padding:12px 20px}.benefit{font-weight:800}.benefit span{color:var(--gold)}.motto{text-align:center;font-weight:900;letter-spacing:3px}.hours{background:var(--gold);color:var(--navy);font-weight:900;text-align:center}
+    @media(max-width:1100px){.main{gap:9px;padding-left:12px;padding-right:12px}.brand h1{letter-spacing:1px}.brand h2{letter-spacing:3px}.cat{padding-right:8px}}
+  </style>
+</head>
+<body>
+<div class="screen">
+<header><img id="leftLogo" class="logo" alt="Kennedy logo"><div class="brand"><h1 id="title">KENNEDY</h1><h2 id="subtitle">FOOTBALL CONCESSIONS</h2></div><img id="rightLogo" class="logo" alt="Kennedy logo"></header>
+<div class="banner" id="banner">★ SUPPORT OUR TEAM. SUPPORT OUR COMMUNITY. ★</div>
+<div class="main" id="menuGrid"></div>
+<footer><div class="benefit">ALL PROCEEDS BENEFIT <span id="benefit">KENNEDY FOOTBALL</span></div><div class="motto" id="motto">ONE TEAM. ONE COMMUNITY.</div><div class="hours" id="hours">CONCESSIONS OPEN 1 HOUR BEFORE KICKOFF</div></footer>
+</div>
+<script>
+const defaultMenu={
+ title:'KENNEDY',subtitle:'FOOTBALL CONCESSIONS',banner:'★ SUPPORT OUR TEAM. SUPPORT OUR COMMUNITY. ★',benefit:'KENNEDY FOOTBALL',motto:'ONE TEAM. ONE COMMUNITY.',hours:'CONCESSIONS OPEN 1 HOUR BEFORE KICKOFF',logo:'',
+ categories:[
+  {name:'HOT FOOD',items:[['Hot Dog','3.00'],['Nachos','4.00'],['Popcorn','2.00']]},
+  {name:'SNACKS',items:[['Chips','1.00'],['Pickle','1.00']]},
+  {name:'CANDY',items:[['Candy Bars','2.00'],['Ring Pops','1.00'],['Cotton Candy','3.00']]},
+  {name:'DRINKS',items:[['Water','2.00'],['Soda','2.00'],['Bubblr','4.00']]}
+ ],
+ sidePanels:[
+  {title:'GAME DAY FUEL',text:'THANK YOU FOR SUPPORTING KENNEDY FOOTBALL!'},
+  {title:'PAYMENT OPTIONS',text:'CASH • CARD • VENMO',qr:''},
+  {title:'GAME DAY PROGRAM',text:'SCAN TO VIEW TODAY\'S DIGITAL GAME DAY PROGRAM!',qr:''}
+ ]
+};
+function getMenu(){try{const q=new URLSearchParams(location.search).get('data');if(q)return JSON.parse(decodeURIComponent(atob(q)));}catch(e){} try{const x=localStorage.getItem('kennedyMenu');if(x)return JSON.parse(x)}catch(e){} return defaultMenu}
+function render(){const m=getMenu();['title','subtitle','banner','benefit','motto','hours'].forEach(k=>document.getElementById(k).textContent=m[k]||'');['leftLogo','rightLogo'].forEach(id=>{const el=document.getElementById(id); if(m.logo){el.src=m.logo;el.style.display='block'}});
+ const grid=document.getElementById('menuGrid'); grid.innerHTML=''; (m.categories||[]).forEach(c=>{const s=document.createElement('section');s.className='cat';s.innerHTML=`<h3>${c.name}</h3><div class="items"></div>`;const list=s.querySelector('.items');(c.items||[]).forEach(i=>{const [name,price,desc,sold]=i;const d=document.createElement('div');d.className='item'+(sold?' sold':'');d.innerHTML=`<div class="name">${name}${desc?`<small>${desc}</small>`:''}</div><div class="price">$${price}</div>`;list.appendChild(d)});grid.appendChild(s)});
+ const side=document.createElement('aside');side.className='side';(m.sidePanels||[]).forEach(p=>{const box=document.createElement('div');box.className='panel';box.innerHTML=`<h4>${p.title}</h4><div class="body"><div>${p.text||''}</div>${p.qr?`<div class="qr" style="display:block"><img src="${p.qr}" alt="QR code"></div>`:''}</div>`;side.appendChild(box)});grid.appendChild(side)}
+render();
+setInterval(()=>{try{const t=localStorage.getItem('kennedyMenuUpdated');if(t&&t!==window.lastT){window.lastT=t;render()}}catch(e){}},2000)
+</script>
+</body>
+</html>
