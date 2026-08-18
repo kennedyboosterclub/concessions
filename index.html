@@ -1,44 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kennedy Football Concessions</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kennedy Concessions</title>
+<script src="menu-data.js"></script>
 <style>
-:root{--navy:#071a3d;--blue:#0b2f6b;--gold:#f6c500;--white:#fff;--muted:#c8d3e6}
-*{box-sizing:border-box}body{margin:0;background:var(--navy);color:#fff;font-family:Arial,Helvetica,sans-serif;overflow:hidden}
-.screen{width:100vw;height:100vh;display:grid;grid-template-rows:auto auto 1fr auto;background:radial-gradient(circle at 50% 0,#123d7d 0,#071a3d 48%,#041127 100%)}
-header{display:flex;align-items:center;justify-content:center;gap:24px;padding:10px 22px 5px;text-align:center}.logo{width:84px;height:84px;object-fit:contain;display:none}
-.brand h1{margin:0;font-size:clamp(42px,4.8vw,82px);letter-spacing:3px;color:var(--gold);text-shadow:0 2px 0 #fff,0 5px 0 #071a3d}.brand h2{margin:0;font-size:clamp(20px,2vw,36px);letter-spacing:6px}
-.banner{background:var(--gold);color:var(--navy);font-weight:900;text-align:center;padding:7px 16px;font-size:clamp(17px,1.55vw,29px);letter-spacing:1px}
-.main{display:grid;grid-template-columns:repeat(4,1fr) 1.05fr;gap:12px;padding:12px 18px 8px;min-height:0}
-.cat{border-right:2px solid var(--gold);padding-right:12px;min-width:0;display:flex;flex-direction:column}.cat h3{margin:0 0 7px;font-size:clamp(22px,1.8vw,34px);font-style:italic;border-bottom:3px solid var(--gold);padding-bottom:5px}
-.items{display:grid;gap:6px}.item{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:clamp(15px,1.2vw,24px);font-weight:800;padding:3px 0}.item .name{min-width:0}.item .price{color:var(--gold);white-space:nowrap}.item small{display:block;color:var(--muted);font-size:.62em;font-weight:400;margin-top:1px}.sold{opacity:.35;text-decoration:line-through}
-.thumb{width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:34px;line-height:1}.thumb img{width:100%;height:100%;object-fit:contain;background:#fff}
-.hero{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding-top:8px}.hero .thumb{width:100%;height:auto;aspect-ratio:1;border-radius:14px;font-size:clamp(34px,3vw,60px);background:rgba(255,255,255,.08)}
-.side{display:grid;gap:10px;align-content:start}.panel{border:3px solid var(--gold);border-radius:13px;overflow:hidden;background:rgba(7,26,61,.9)}.panel h4{margin:0;background:var(--gold);color:var(--navy);padding:6px 10px;text-align:center;font-size:clamp(17px,1.35vw,25px)}.panel .body{padding:10px;text-align:center;font-size:clamp(13px,1vw,20px);font-weight:700}.qr{width:min(125px,70%);aspect-ratio:1;background:#fff;margin:7px auto 0;border-radius:7px;padding:5px}.qr img{width:100%;height:100%;object-fit:contain}
-footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-top:2px solid rgba(255,255,255,.35);font-size:clamp(14px,1.25vw,24px)}footer>div{padding:9px 16px}.benefit{font-weight:900}.benefit span{color:var(--gold)}.motto{text-align:center;font-weight:900;letter-spacing:2px}.hours{background:var(--gold);color:var(--navy);font-weight:900;text-align:center}
-@media(max-width:1100px){.main{gap:8px;padding-left:10px;padding-right:10px}.cat{padding-right:7px}.item{grid-template-columns:42px minmax(0,1fr) auto}.thumb{width:40px;height:40px;font-size:28px}.brand h2{letter-spacing:3px}}
+:root{--navy:#021321;--gold:#f0a400;--cream:#f8f4e8;--white:#fff;--ink:#0b1420}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;font-family:Impact,Haettenschweiler,'Arial Narrow Bold',Arial,sans-serif}
+body{display:grid;place-items:center}.board{position:relative;width:100vw;height:56.25vw;max-height:100vh;max-width:177.78vh;background:radial-gradient(circle at 50% 15%,#07304a 0,#031928 43%,#010d17 100%);color:#fff;overflow:hidden;border:10px solid #080d12}
+.board:before,.board:after{content:"";position:absolute;top:22px;width:170px;height:170px;background:url('assets/logo-left.png') center/contain no-repeat;filter:drop-shadow(0 3px 2px #000)}.board:before{left:24px}.board:after{right:24px;transform:scaleX(-1)}
+.lights{position:absolute;top:18px;width:120px;height:70px;background:radial-gradient(circle,#fff 0 18%,transparent 22%) 0 0/33% 50%;filter:drop-shadow(0 0 12px #bfe7ff);opacity:.95}.lights.left{left:12px}.lights.right{right:12px}
+.header{height:23%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:6px;text-align:center}.title{font-size:clamp(48px,6vw,96px);letter-spacing:5px;color:var(--gold);-webkit-text-stroke:2px #fff;text-shadow:0 5px 0 #5d3300,0 9px 12px #000;line-height:.85}.subtitle{font-size:clamp(44px,5.4vw,86px);letter-spacing:2px;color:#f3efe8;text-shadow:0 6px 0 #111;line-height:.88}.tagline{margin-top:8px;background:linear-gradient(90deg,transparent 0,var(--gold) 8%,var(--gold) 92%,transparent 100%);color:#111;padding:7px 64px;font-size:clamp(18px,2vw,34px);letter-spacing:1px;transform:rotate(-1deg)}
+.main{height:55%;display:grid;grid-template-columns:28% 24% 24% 24%;gap:12px;padding:6px 16px}.panel{border:4px solid var(--gold);border-radius:18px;background:rgba(2,19,33,.93);padding:10px 12px;overflow:hidden}.panel.light{background:var(--cream);color:var(--ink);border-color:#111}.section-title{text-align:center;color:#111;background:var(--gold);font-size:clamp(22px,2.2vw,40px);padding:2px 18px;margin:-2px auto 8px;width:max-content;max-width:95%;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);letter-spacing:1px}.hot-item{display:grid;grid-template-columns:32% 1fr auto;align-items:center;min-height:18.2%;border-bottom:2px solid #111;padding:2px 0}.hot-item:last-child{border-bottom:0}.hot-item img{width:100%;height:70px;object-fit:contain}.name{font-size:clamp(20px,2vw,35px);line-height:.92}.price{font-size:clamp(28px,2.8vw,48px);color:#111;background:var(--gold);padding:2px 8px;margin-left:6px;clip-path:polygon(8% 0,100% 10%,92% 100%,0 90%)}
+.dark-item{display:grid;grid-template-columns:23% 1fr auto;align-items:center;gap:7px;min-height:20%;border-bottom:2px dotted var(--gold);padding:3px 0}.dark-item:last-child{border-bottom:0}.dark-item img{width:100%;height:60px;object-fit:contain}.dark-item .name{font-size:clamp(18px,1.55vw,29px)}.dark-item .price{background:none;color:var(--gold);clip-path:none;font-size:clamp(24px,2vw,36px);padding:0}.desc{font-family:Arial,sans-serif;font-size:clamp(10px,.72vw,15px);font-weight:700;line-height:1.15;margin-top:2px}
+.stack{display:grid;grid-template-rows:1fr .95fr;gap:12px}.stack .panel{min-height:0}.candy-item{display:grid;grid-template-columns:1fr auto;align-items:center;border-bottom:2px dotted var(--gold);padding:5px 0}.candy-item:last-child{border-bottom:0}.candy-item .name{font-size:clamp(18px,1.5vw,28px)}.candy-image{height:62px;width:100%;object-fit:contain;margin-top:-4px}
+.side{display:grid;grid-template-rows:1fr auto auto;gap:10px}.fuel{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.fuel img{width:75%;max-height:130px;object-fit:contain}.fuel strong{font-size:clamp(24px,2.1vw,38px);color:var(--gold)}.fuel span{font-family:Arial,sans-serif;font-weight:800;font-size:clamp(14px,1vw,20px)}.smallbox{border:4px solid var(--gold);border-radius:14px;overflow:hidden;background:#041b2d}.smallbox h3{margin:0;background:var(--gold);color:#111;text-align:center;padding:5px;font-size:clamp(16px,1.3vw,24px)}.smallbox .inside{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;padding:7px 10px;font-family:Arial,sans-serif;font-weight:800;font-size:clamp(12px,.9vw,18px)}.qr{width:70px;height:70px;background:#fff;padding:3px;object-fit:contain}.hidden{display:none!important}
+.meals{height:16%;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:4px 16px}.meal{display:grid;grid-template-columns:auto 1fr auto 28%;align-items:center;gap:10px;background:var(--cream);color:#111;border:4px solid #111;border-radius:16px;padding:3px 12px;position:relative}.meal .meal-name{font-size:clamp(24px,2.4vw,42px)}.meal .meal-price{font-size:clamp(30px,3vw,50px);color:#111;background:var(--gold);padding:0 10px}.meal .meal-desc{font-family:Arial,sans-serif;font-weight:900;font-size:clamp(10px,.72vw,15px);line-height:1.05;text-transform:uppercase}.meal img{width:100%;height:92px;object-fit:contain}.footer{height:6%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(20px,2vw,36px);font-style:italic;letter-spacing:1px}.footer b{color:var(--gold);margin-left:8px}
+@media (max-aspect-ratio:16/9){.board{width:177.78vh;height:100vh}}
 </style>
 </head>
-<body><div class="screen">
-<header><img id="leftLogo" class="logo" alt="Kennedy logo"><div class="brand"><h1 id="title">KENNEDY</h1><h2 id="subtitle">FOOTBALL CONCESSIONS</h2></div><img id="rightLogo" class="logo" alt="Kennedy logo"></header>
-<div class="banner" id="banner">★ SUPPORT OUR TEAM. SUPPORT OUR COMMUNITY. ★</div>
-<div class="main" id="menuGrid"></div>
-<footer><div class="benefit">ALL PROCEEDS BENEFIT <span id="benefit">KENNEDY FOOTBALL</span></div><div class="motto" id="motto">ONE TEAM. ONE COMMUNITY.</div><div class="hours" id="hours">CONCESSIONS OPEN 1 HOUR BEFORE KICKOFF</div></footer>
+<body>
+<div class="board">
+  <div class="lights left"></div><div class="lights right"></div>
+  <div class="header"><div class="title" id="title"></div><div class="subtitle" id="subtitle"></div><div class="tagline" id="tagline"></div></div>
+  <div class="main">
+    <section class="panel light"><div id="hotFood"></div></section>
+    <section class="panel"><div class="section-title">DRINKS</div><div id="drinks"></div></section>
+    <div class="stack"><section class="panel"><div class="section-title">SNACKS</div><div id="snacks"></div></section><section class="panel"><div class="section-title">CANDY</div><img src="assets/candy.png" class="candy-image" alt="Candy"><div id="candy"></div></section></div>
+    <aside class="side"><section class="panel fuel"><strong>GAME DAY FUEL</strong><img src="assets/helmet.png" alt="Kennedy football helmet"><span>THANK YOU FOR SUPPORTING<br>KENNEDY FOOTBALL!</span></section><section class="smallbox" id="paymentBox"><h3>PAYMENT OPTIONS</h3><div class="inside"><div id="payments"></div><img id="paymentQr" class="qr hidden" alt="Payment QR"></div></section><section class="smallbox" id="programBox"><h3>GAME DAY PROGRAM</h3><div class="inside"><div id="programText"></div><img id="programQr" class="qr hidden" alt="Program QR"></div></section></aside>
+  </div>
+  <div class="meals" id="meals"></div>
+  <div class="footer">ALL PROCEEDS SUPPORT <b>OUR FOOTBALL ATHLETES!</b></div>
 </div>
 <script>
-const defaultMenu={title:'KENNEDY',subtitle:'FOOTBALL CONCESSIONS',banner:'★ SUPPORT OUR TEAM. SUPPORT OUR COMMUNITY. ★',benefit:'KENNEDY FOOTBALL',motto:'ONE TEAM. ONE COMMUNITY.',hours:'CONCESSIONS OPEN 1 HOUR BEFORE KICKOFF',logo:'',categories:[
-{name:'HOT FOOD',items:[['Hot Dog','3.00','','', '', '🌭'],['Nachos','4.00','','','', '🧀'],['Popcorn','2.00','','','', '🍿']]},
-{name:'SNACKS',items:[['Chips','1.00','','','', '🥔'],['Pickle','1.00','','','', '🥒']]},
-{name:'CANDY',items:[['Candy Bars','2.00','','','', '🍫'],['Ring Pops','1.00','','','', '💍'],['Cotton Candy','3.00','','','', '🍬']]},
-{name:'DRINKS',items:[['Water','2.00','','','', '💧'],['Soda','2.00','','','', '🥤'],['Bubblr','4.00','','','', '🫧']]}
-],sidePanels:[{title:'GAME DAY FUEL',text:'THANK YOU FOR SUPPORTING KENNEDY FOOTBALL!'},{title:'PAYMENT OPTIONS',text:'CASH • CARD • VENMO',qr:''},{title:'GAME DAY PROGRAM',text:"SCAN TO VIEW TODAY'S DIGITAL GAME DAY PROGRAM!",qr:''}]};
-function getMenu(){try{const q=new URLSearchParams(location.search).get('data');if(q)return JSON.parse(decodeURIComponent(atob(q)))}catch(e){}try{const x=localStorage.getItem('kennedyMenu');if(x)return JSON.parse(x)}catch(e){}return defaultMenu}
-function fallbackIcon(name){const n=(name||'').toLowerCase();if(n.includes('hot dog'))return'🌭';if(n.includes('nacho'))return'🧀';if(n.includes('popcorn'))return'🍿';if(n.includes('chip'))return'🥔';if(n.includes('pickle'))return'🥒';if(n.includes('candy bar'))return'🍫';if(n.includes('ring'))return'💍';if(n.includes('cotton'))return'🍬';if(n.includes('water'))return'💧';if(n.includes('soda'))return'🥤';if(n.includes('bubblr'))return'🫧';return'⭐'}
-function thumbHTML(item,big=false){const name=item[0]||'',url=item[4]||'',icon=item[5]||fallbackIcon(name);return `<div class="thumb${big?' big':''}">${url?`<img src="${url}" alt="${name}" onerror="this.parentElement.textContent='${icon}'">`:icon}</div>`}
-function render(){const m=getMenu();['title','subtitle','banner','benefit','motto','hours'].forEach(k=>document.getElementById(k).textContent=m[k]||'');['leftLogo','rightLogo'].forEach(id=>{const el=document.getElementById(id);if(m.logo){el.src=m.logo;el.style.display='block'}else el.style.display='none'});
-const grid=document.getElementById('menuGrid');grid.innerHTML='';(m.categories||[]).forEach(c=>{const s=document.createElement('section');s.className='cat';s.innerHTML=`<h3>${c.name}</h3><div class="items"></div><div class="hero"></div>`;const list=s.querySelector('.items');(c.items||[]).forEach(i=>{const [name,price,desc,sold]=i;const d=document.createElement('div');d.className='item'+(sold?' sold':'');d.innerHTML=`${thumbHTML(i)}<div class="name">${name}${desc?`<small>${desc}</small>`:''}</div><div class="price">$${price}</div>`;list.appendChild(d)});const hero=s.querySelector('.hero');(c.items||[]).slice(0,3).forEach(i=>{hero.insertAdjacentHTML('beforeend',thumbHTML(i,true))});grid.appendChild(s)});
-const side=document.createElement('aside');side.className='side';(m.sidePanels||[]).forEach(p=>{const box=document.createElement('div');box.className='panel';box.innerHTML=`<h4>${p.title}</h4><div class="body"><div>${p.text||''}</div>${p.qr?`<div class="qr"><img src="${p.qr}" alt="QR code"></div>`:''}</div>`;side.appendChild(box)});grid.appendChild(side)}
-render();setInterval(()=>{try{const t=localStorage.getItem('kennedyMenuUpdated');if(t&&t!==window.lastT){window.lastT=t;render()}}catch(e){}},2000)
-</script></body></html>
+try{const q=localStorage.getItem('kennedyPreviewData');if(new URLSearchParams(location.search).has('preview')&&q)window.KENNEDY_MENU=JSON.parse(q)}catch(e){}
+const d=window.KENNEDY_MENU||{};const $=id=>document.getElementById(id);$('title').textContent=d.title||'KENNEDY';$('subtitle').textContent=d.subtitle||'CONCESSIONS';$('tagline').textContent=d.tagline||'';document.querySelector('.footer').innerHTML=(d.footer||'ALL PROCEEDS SUPPORT OUR FOOTBALL ATHLETES!').replace(/(OUR FOOTBALL ATHLETES!)/i,'<b>$1</b>');
+function hot(items){$('hotFood').innerHTML=(items||[]).map(i=>`<div class="hot-item"><img src="${i.image||''}" alt=""><div class="name">${i.name||''}</div><div class="price">$${i.price||''}</div></div>`).join('')}
+function dark(id,items){$(id).innerHTML=(items||[]).map(i=>`<div class="dark-item"><img src="${i.image||''}" alt=""><div><div class="name">${i.name||''}</div>${i.description?`<div class="desc">${i.description}</div>`:''}</div><div class="price">$${i.price||''}</div></div>`).join('')}
+function candy(items){$('candy').innerHTML=(items||[]).map(i=>`<div class="candy-item"><div class="name">${i.name||''}</div><div class="price">$${i.price||''}</div></div>`).join('')}
+function meals(items){$('meals').innerHTML=(items||[]).map(i=>`<section class="meal"><div><div class="meal-name">${i.name||''}</div><div class="meal-price">$${i.price||''}</div></div><div class="meal-desc">INCLUDES:<br>${i.description||''}</div><img src="${i.image||''}" alt=""><div></div></section>`).join('')}
+hot(d.hotFood);dark('drinks',d.drinks);dark('snacks',d.snacks);candy(d.candy);meals(d.meals);
+$('payments').textContent=d.payments||'';$('programText').textContent=d.programText||'';$('paymentBox').classList.toggle('hidden',d.showPayments===false);$('programBox').classList.toggle('hidden',d.showProgram===false);if(d.paymentQr){$('paymentQr').src=d.paymentQr;$('paymentQr').classList.remove('hidden')}if(d.programQr){$('programQr').src=d.programQr;$('programQr').classList.remove('hidden')}
+</script>
+</body></html>

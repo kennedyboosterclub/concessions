@@ -1,18 +1,26 @@
-# Kennedy Football Concessions Digital Menu
+# Kennedy Concessions 16:9 TV Menu
 
-Files:
-- `index.html` — TV menu for Fire TV / Silk Browser
-- `editor.html` — simple menu editor
+This package is designed for a 16:9 television and GitHub Pages.
 
-## Update your existing GitHub repository
-1. In the `concessions` repository, click **Add file → Upload files**.
-2. Upload the new `index.html` and `editor.html` and allow GitHub to replace the existing versions.
-3. Click **Commit changes**.
-4. GitHub Pages updates automatically, usually within 1–2 minutes.
-5. TV: `https://kennedyboosterclub.github.io/concessions/`
-6. Editor: `https://kennedyboosterclub.github.io/concessions/editor.html`
+## Files to upload
+Upload everything in this folder to the root of your `concessions` repository:
+- `index.html`
+- `editor.html`
+- `menu-data.js`
+- the entire `assets` folder
 
-## Images
-The revised menu includes large visual icons by default so the TV is not mostly empty text. In the editor, every item also has an **Image URL** field. Paste a direct image URL there to replace the icon with an actual product photo.
+Your TV menu remains:
+`https://kennedyboosterclub.github.io/concessions/`
 
-Because GitHub Pages is static and has no database, the editor creates a shareable TV link containing the current menu configuration.
+Your editor remains:
+`https://kennedyboosterclub.github.io/concessions/editor.html`
+
+## Updating the menu later
+1. Open `editor.html` from your GitHub Pages site.
+2. Change items, prices, descriptions, QR image URLs, etc.
+3. Click **Download menu-data.js**.
+4. In GitHub, replace the existing `menu-data.js` with the newly downloaded file.
+5. Commit the change.
+6. GitHub Pages republishes the menu automatically.
+
+This approach remains free and does not require a database.
