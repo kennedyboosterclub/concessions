@@ -44,6 +44,7 @@
 <div class="token-row" style="margin-top:12px"><label>GitHub fine-grained token<input id="ghToken" type="password" autocomplete="off" placeholder="github_pat_..."><div class="small">Token is held in sessionStorage only, so it disappears when the browser session ends.</div></label><button type="button" class="btn alt" id="forgetToken">Forget Token</button></div>
 <div class="actions" style="margin-top:14px">
 <button class="btn" id="previewBtn">Refresh Preview</button>
+<button class="btn alt" id="testGithub">Test GitHub Connection</button>
 <button class="btn publish" id="publish">SAVE &amp; PUBLISH TO TV</button>
 <button class="btn good" id="download">Download menu-data.js</button>
 <button class="btn alt" id="exportJson">Backup JSON</button>
@@ -168,7 +169,7 @@ $('#download').onclick=()=>downloadText('menu-data.js',menuJs(),'text/javascript
 $('#exportJson').onclick=()=>downloadText('kennedy-menu-backup.json',JSON.stringify(data,null,2),'application/json');
 $('#importJson').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);bindTop();renderSections();refreshPreview();setStatus('Backup restored.','ok')}catch(err){setStatus('That backup file could not be read.','err')}};r.readAsText(f)};
 $('#reset').onclick=()=>{if(confirm('Reset all menu edits back to the currently published menu?')){data=JSON.parse(JSON.stringify(original));bindTop();renderSections();refreshPreview()}};
-$('#testGithub').onclick=async()=>{
+const testGithubBtn=$('#testGithub'); if(testGithubBtn) testGithubBtn.onclick=async()=>{
   const owner=$('#ghOwner').value.trim(),repo=$('#ghRepo').value.trim(),branch=$('#ghBranch').value.trim()||'main',token=$('#ghToken').value.trim();
   if(!owner||!repo||!token){setStatus('Enter the GitHub owner, repository and token first.','err');return}
   sessionStorage.setItem('kennedyGhToken',token);
@@ -184,9 +185,15 @@ $('#publish').onclick=publish;
 $('#forgetToken').onclick=()=>{$('#ghToken').value='';sessionStorage.removeItem('kennedyGhToken');setStatus('GitHub token forgotten for this browser session.','ok')};
 $('#clearPaymentQr').onclick=()=>{data.paymentQr='';$('#paymentQr').value='';previewImg($('#paymentQrPreview'),'')};
 $('#clearProgramQr').onclick=()=>{data.programQr='';$('#programQr').value='';previewImg($('#programQrPreview'),'')};
-bindQrUpload('paymentQrUpload','paymentQr','paymentQrPreview');bindQrUpload('programQrUpload','programQr','programQrPreview');
-bindTop();renderSections();
-$('#ghToken').value=sessionStorage.getItem('kennedyGhToken')||'';$('#ghOwner').value=sessionStorage.getItem('kennedyGhOwner')||'kennedyboosterclub';$('#ghRepo').value=sessionStorage.getItem('kennedyGhRepo')||'concessions';$('#ghBranch').value=sessionStorage.getItem('kennedyGhBranch')||'main';
+// Render the editable menu first so a publishing-control problem can never hide product editing.
+bindTop();
+renderSections();
+bindQrUpload('paymentQrUpload','paymentQr','paymentQrPreview');
+bindQrUpload('programQrUpload','programQr','programQrPreview');
+$('#ghToken').value=sessionStorage.getItem('kennedyGhToken')||'';
+$('#ghOwner').value=sessionStorage.getItem('kennedyGhOwner')||'kennedyboosterclub';
+$('#ghRepo').value=sessionStorage.getItem('kennedyGhRepo')||'concessions';
+$('#ghBranch').value=sessionStorage.getItem('kennedyGhBranch')||'main';
 </script>
 </body>
 </html>

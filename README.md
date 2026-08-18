@@ -1,26 +1,19 @@
-# Kennedy Football Concessions Digital Menu
+# Kennedy Football Concessions – v7 editor fix
 
-## Files
-- `index.html` — 16:9 TV menu for Fire TV / Silk Browser
-- `editor.html` — menu editor with product image upload and direct GitHub publishing
-- `menu-data.js` — menu content read by the TV page
-- `assets/` — starter product and Kennedy artwork
+Upload all files/folders in this package to the existing `kennedyboosterclub/concessions` repository and replace the existing versions.
 
-## Editor workflow
-1. Open `https://kennedyboosterclub.github.io/concessions/editor.html`.
-2. Edit products, prices, descriptions, headings, payment information, or meal deals.
-3. For any product, click **Choose Image** and select a photo from your phone/computer. The editor automatically resizes and compresses it and embeds it into `menu-data.js`, so no separate image upload is required.
-4. Click **Refresh Preview** to see the TV board.
-5. Enter a GitHub fine-grained personal access token with repository access limited to `kennedyboosterclub/concessions` and permission **Contents: Read and write**.
-6. Click **SAVE & PUBLISH TO TV**. The editor updates `menu-data.js` through GitHub's API. GitHub Pages then rebuilds automatically.
-7. Refresh the Fire TV menu after the deployment completes.
+## What v7 fixes
+- Restores all five editable product groups: Hot Food, Drinks, Snacks, Candy, and Meal Deals.
+- Adds the missing **Test GitHub Connection** button.
+- Initializes the product editor before GitHub publishing controls, so a publishing-script issue cannot make the product sections disappear.
+- Keeps product photo upload, QR upload, descriptions, prices, add/remove item controls, preview, backup/restore, and direct publishing.
+- GitHub publishing fetches the current `menu-data.js` SHA before every update and retries one SHA conflict automatically.
 
-## Token safety
-The editor does not place your token in the repository or menu data. It stores the token only in `sessionStorage`, which lasts for the current browser session. Use a fine-grained token restricted to this one repository and only the permissions required for updating repository contents.
+## After upload
+GitHub Pages/browser caching may briefly show the older editor. After the commit finishes, open:
 
-## Manual fallback
-The editor can still download `menu-data.js`. If direct publishing is ever unavailable, upload that one file to the repository root and commit it manually.
+`https://kennedyboosterclub.github.io/concessions/editor.html?v=7`
 
+The `?v=7` is only a cache-buster. You can later use the normal editor URL.
 
-## v6 publishing fix
-The editor now uses minimal CORS-safe GitHub REST API headers and includes a **Test GitHub Connection** button. Test the connection before publishing.
+Before publishing, click **Test GitHub Connection**. A successful test confirms that the browser can read `menu-data.js` with the token. The token needs repository `Contents: Read and write` access.
