@@ -23,3 +23,8 @@ Every editable section now includes Move Up and Move Down buttons. Reordering ch
 
 ## v16 Candy row update
 Candy now renders like the other product categories: each item has its own image, item name, up to three lines of description, and price. The old decorative category image under the Candy heading has been removed.
+
+## v17 fixes
+- Fixed Candy rows failing to render because of an undefined image helper.
+- Restored Meal Deals rendering after Candy.
+- Standardized all product price badges to the same gold/black style used by Hot Food.
