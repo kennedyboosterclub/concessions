@@ -7,8 +7,8 @@
 <script src="menu-data.js"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#eef2f6;color:#142338;font-family:Arial,sans-serif}.wrap{max-width:1220px;margin:auto;padding:24px}h1{margin:0 0 6px}.note{color:#5c6877;margin:0 0 20px}.card{background:#fff;border:1px solid #d9e0e8;border-radius:14px;padding:18px;margin-bottom:16px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}label{display:block;font-weight:700;font-size:13px}input,textarea,select{width:100%;margin-top:5px;padding:10px 11px;border:1px solid #b9c3cf;border-radius:8px;font:inherit}.row{display:grid;grid-template-columns:1.3fr .45fr 1.4fr 2fr auto;gap:9px;align-items:end;padding:11px 0;border-bottom:1px solid #edf0f4}.row:last-child{border:0}.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.btn{border:0;border-radius:9px;padding:11px 15px;background:#0b376b;color:white;font-weight:800;cursor:pointer}.btn.alt{background:#6a7788}.btn.good{background:#166534}.btn.publish{background:#166534;font-size:16px;padding:13px 18px}.btn.warn{background:#a33}.check{display:flex;align-items:center;gap:6px;height:38px}.check input{width:auto;margin:0}.preview{display:block;width:100%;aspect-ratio:16/9;border:1px solid #ccd4dd;border-radius:10px;margin-top:12px;background:#000}.help{font-size:13px;color:#5c6877;line-height:1.45}.pill{display:block;background:#fff4cc;border:1px solid #e8c765;color:#5c4300;padding:10px 12px;border-radius:8px;font-size:13px;margin-bottom:12px}.status{padding:10px 12px;border-radius:9px;margin-top:12px;font-weight:700;display:none}.status.ok{display:block;background:#dcfce7;color:#14532d}.status.err{display:block;background:#fee2e2;color:#7f1d1d}.status.work{display:block;background:#dbeafe;color:#1e3a8a}.image-tools{display:grid;grid-template-columns:80px 1fr;gap:8px;align-items:center}.thumb{width:80px;height:58px;border:1px solid #ccd4dd;border-radius:8px;object-fit:contain;background:#f8fafc}.upload-label{display:block;background:#e9eef5;border:1px solid #c7d0dc;border-radius:8px;padding:8px;text-align:center;font-size:12px;cursor:pointer}.upload-label input{display:none}.image-actions{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:5px}.mini{border:0;border-radius:7px;padding:8px 10px;background:#6a7788;color:#fff;font-weight:700;cursor:pointer}.github-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.token-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}.small{font-size:12px;color:#687386;font-weight:normal;margin-top:5px}.qr-preview{width:72px;height:72px;object-fit:contain;border:1px solid #ccd4dd;background:#fff;border-radius:7px;margin-top:8px}.wide{grid-column:1/-1}
-.desc-wrap{grid-column:1/-1}.desc-label-row{display:flex;justify-content:space-between;align-items:center;gap:12px}.char-count{font-size:11px;font-weight:800}.char-count.good{color:#15803d}.char-count.caution{color:#b45309}.char-count.danger{color:#b91c1c}.desc-input{width:100%;resize:vertical;min-height:42px}.row-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.move-btn{background:#374151}.move-btn:disabled{opacity:.35;cursor:not-allowed}@media(max-width:900px){.grid,.github-grid{grid-template-columns:1fr}.row{grid-template-columns:1fr 1fr}.wide{grid-column:1/-1}
-.desc-wrap{grid-column:1/-1}.desc-label-row{display:flex;justify-content:space-between;align-items:center;gap:12px}.char-count{font-size:11px;font-weight:800}.char-count.good{color:#15803d}.char-count.caution{color:#b45309}.char-count.danger{color:#b91c1c}.desc-input{width:100%;resize:vertical;min-height:42px}.row-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.move-btn{background:#374151}.move-btn:disabled{opacity:.35;cursor:not-allowed}.image-cell{grid-column:1/-1}}
+.desc-wrap{grid-column:1/-1}.desc-label-row{display:flex;justify-content:space-between;align-items:center;gap:12px}.char-count{font-size:11px;font-weight:800}.char-count.good{color:#15803d}.char-count.caution{color:#b45309}.char-count.danger{color:#b91c1c}.desc-input{width:100%;resize:vertical;min-height:42px}.row-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.move-btn{background:#374151}.move-btn:disabled{opacity:.35;cursor:not-allowed}.sponsor-row{display:grid;grid-template-columns:1.1fr 1.6fr 2fr;gap:10px;align-items:end;padding:12px 0;border-bottom:1px solid #edf0f4}.sponsor-row:last-child{border-bottom:0}.sponsor-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.sponsor-settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}@media(max-width:900px){.grid,.github-grid{grid-template-columns:1fr}.row{grid-template-columns:1fr 1fr}.wide{grid-column:1/-1}
+.desc-wrap{grid-column:1/-1}.desc-label-row{display:flex;justify-content:space-between;align-items:center;gap:12px}.char-count{font-size:11px;font-weight:800}.char-count.good{color:#15803d}.char-count.caution{color:#b45309}.char-count.danger{color:#b91c1c}.desc-input{width:100%;resize:vertical;min-height:42px}.row-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.move-btn{background:#374151}.move-btn:disabled{opacity:.35;cursor:not-allowed}.image-cell{grid-column:1/-1}.sponsor-row,.sponsor-settings{grid-template-columns:1fr}.sponsor-row .image-cell{grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -63,6 +63,9 @@ const original=window.KENNEDY_MENU||{};
 let data=JSON.parse(JSON.stringify(original));
 function migrateV9(){if((data.schemaVersion||0)>=9)return;data.breakfast=Array.isArray(data.breakfast)?data.breakfast:[];data.snacks=Array.isArray(data.snacks)?data.snacks:[];const u=data.snacks.find(i=>/UNCRUSTABLE/i.test(i.name||''));if(u&&!data.breakfast.some(i=>/UNCRUSTABLE/i.test(i.name||''))){data.breakfast.push(u);data.snacks=data.snacks.filter(i=>i!==u)}if(!data.breakfast.some(i=>/DONUT/i.test(i.name||'')))data.breakfast.push({name:'DONUTS',price:'2',description:'',image:'assets/donuts.svg',outOfStock:false});data.drinks=Array.isArray(data.drinks)?data.drinks:[];if(!data.drinks.some(i=>/COFFEE/i.test(i.name||'')))data.drinks.push({name:'COFFEE',price:'2',description:'',image:'assets/coffee.svg',outOfStock:false});if(!data.drinks.some(i=>/RED BULL/i.test(i.name||'')))data.drinks.push({name:'RED BULL',price:'4',description:'',image:'assets/redbull.svg',outOfStock:false});data.schemaVersion=9;}
 migrateV9();
+if(!Array.isArray(data.sponsors))data.sponsors=[];
+if(typeof data.showSponsors!=='boolean')data.showSponsors=true;
+if(!data.sponsorRotationSeconds)data.sponsorRotationSeconds=10;
 const $=s=>document.querySelector(s);
 const topKeys=['title','subtitle','tagline','footer','payments','programText','paymentQr','programQr'];
 const defs=[['hotFood','Hot Food'],['drinks','Drinks'],['snacks','Snacks'],['breakfast','Breakfast'],['candy','Candy'],['meals','Meal Deals']];
@@ -109,6 +112,30 @@ function renderSections(){
     }
     redraw();const addBtn=card.querySelector('.add');const updateAdd=()=>{if(key==='meals'){addBtn.disabled=(data[key]||[]).length>=3;addBtn.textContent=addBtn.disabled?'Maximum 3 Meal Deals':'Add Meal Deal'}else addBtn.textContent='Add Item'};updateAdd();addBtn.onclick=()=>{if(key==='meals'&&(data[key]||[]).length>=3){setStatus('Meal Deals are limited to a maximum of 3.','err');return}(data[key]||(data[key]=[])).push({name:'NEW ITEM',price:'0',description:'',image:'',outOfStock:false});redraw();updateAdd();refreshPreview()};root.appendChild(card)
   })
+}
+function renderSponsors(){
+  const root=$('#sections');
+  const card=document.createElement('div');card.className='card';
+  card.innerHTML=`<h2>Sponsors</h2><p class="help">Upload sponsor logos and arrange them in rotation order. The TV shows two sponsors at a time in a full-width carousel below the Meal Deals, then rotates to the next pair.</p><div class="sponsor-settings"><label class="check"><input type="checkbox" class="show-sponsors"> Show sponsor carousel on TV</label><label>Rotation interval (seconds)<input class="sponsor-seconds" type="number" min="3" max="60" step="1"></label></div><div class="sponsor-rows"></div><button type="button" class="btn alt add-sponsor">Add Sponsor</button>`;
+  const show=card.querySelector('.show-sponsors'),seconds=card.querySelector('.sponsor-seconds'),rows=card.querySelector('.sponsor-rows');
+  show.checked=data.showSponsors!==false;seconds.value=Math.max(3,Math.min(60,Number(data.sponsorRotationSeconds)||10));
+  show.onchange=e=>{data.showSponsors=e.target.checked;refreshPreview()};seconds.oninput=e=>{data.sponsorRotationSeconds=Math.max(3,Math.min(60,Number(e.target.value)||6));refreshPreview()};
+  function redraw(){
+    rows.innerHTML='';
+    data.sponsors.forEach((sp,n)=>{
+      const r=document.createElement('div');r.className='sponsor-row';
+      r.innerHTML=`<label>Sponsor name<input class="sponsor-name" value="${esc(sp.name||'')}"></label><label>Message<input class="sponsor-message" value="${esc(sp.message||'')}" placeholder="Thank you for supporting Kennedy Football!"></label><div class="image-cell"><label>Sponsor logo</label><div class="image-tools"><img class="thumb" alt="Sponsor preview"><div><input class="image-url" value="${esc(sp.image||'')}" placeholder="Image URL or embedded image"><div class="image-actions"><label class="upload-label">Choose Logo<input class="image-upload" type="file" accept="image/*"></label><button type="button" class="mini clear-image">Clear</button></div></div></div></div><div class="sponsor-actions"><button type="button" class="btn move-btn move-up" ${n===0?'disabled':''}>↑ Move Up</button><button type="button" class="btn move-btn move-down" ${n===data.sponsors.length-1?'disabled':''}>↓ Move Down</button><button type="button" class="btn stock-btn ${sp.active===false?'out':'in'}">${sp.active===false?'HIDDEN':'ACTIVE'}</button><button type="button" class="btn warn remove">Remove</button></div>`;
+      const name=r.querySelector('.sponsor-name'),message=r.querySelector('.sponsor-message'),url=r.querySelector('.image-url'),thumb=r.querySelector('.thumb');
+      name.oninput=e=>{sp.name=e.target.value;refreshPreview()};message.oninput=e=>{sp.message=e.target.value;refreshPreview()};previewImg(thumb,sp.image);url.oninput=e=>{sp.image=e.target.value;previewImg(thumb,sp.image);refreshPreview()};
+      r.querySelector('.image-upload').onchange=async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;setStatus(`Processing ${sp.name||'sponsor'} logo…`,'work');try{sp.image=await imageFileToDataUrl(f,700,400,.9);url.value=sp.image;previewImg(thumb,sp.image);refreshPreview();setStatus('Sponsor logo added.','ok')}catch(err){setStatus('Could not process that logo: '+err.message,'err')}e.target.value=''};
+      r.querySelector('.clear-image').onclick=()=>{sp.image='';url.value='';previewImg(thumb,'');refreshPreview()};
+      r.querySelector('.move-up').onclick=()=>{if(n<=0)return;[data.sponsors[n-1],data.sponsors[n]]=[data.sponsors[n],data.sponsors[n-1]];redraw();refreshPreview()};
+      r.querySelector('.move-down').onclick=()=>{if(n>=data.sponsors.length-1)return;[data.sponsors[n+1],data.sponsors[n]]=[data.sponsors[n],data.sponsors[n+1]];redraw();refreshPreview()};
+      r.querySelector('.stock-btn').onclick=()=>{sp.active=sp.active===false?true:false;redraw();refreshPreview()};
+      r.querySelector('.remove').onclick=()=>{data.sponsors.splice(n,1);redraw();refreshPreview()};rows.appendChild(r);
+    });
+  }
+  redraw();card.querySelector('.add-sponsor').onclick=()=>{data.sponsors.push({name:'NEW SPONSOR',message:'Thank you for supporting Kennedy Football!',image:'',active:true});redraw();refreshPreview()};root.appendChild(card);
 }
 function menuJs(){return 'window.KENNEDY_MENU = '+JSON.stringify(data,null,2)+';\n'}
 function refreshPreview(){localStorage.setItem('kennedyPreviewData',JSON.stringify(data));$('#preview').src='index.html?preview='+Date.now()}
@@ -178,8 +205,8 @@ async function publish(){
 $('#previewBtn').onclick=refreshPreview;
 $('#download').onclick=()=>downloadText('menu-data.js',menuJs(),'text/javascript');
 $('#exportJson').onclick=()=>downloadText('kennedy-menu-backup.json',JSON.stringify(data,null,2),'application/json');
-$('#importJson').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);bindTop();renderSections();refreshPreview();setStatus('Backup restored.','ok')}catch(err){setStatus('That backup file could not be read.','err')}};r.readAsText(f)};
-$('#reset').onclick=()=>{if(confirm('Reset all menu edits back to the currently published menu?')){data=JSON.parse(JSON.stringify(original));bindTop();renderSections();refreshPreview()}};
+$('#importJson').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);bindTop();renderSections();renderSponsors();refreshPreview();setStatus('Backup restored.','ok')}catch(err){setStatus('That backup file could not be read.','err')}};r.readAsText(f)};
+$('#reset').onclick=()=>{if(confirm('Reset all menu edits back to the currently published menu?')){data=JSON.parse(JSON.stringify(original));bindTop();renderSections();renderSponsors();refreshPreview()}};
 const testGithubBtn=$('#testGithub'); if(testGithubBtn) testGithubBtn.onclick=async()=>{
   const owner=$('#ghOwner').value.trim(),repo=$('#ghRepo').value.trim(),branch=$('#ghBranch').value.trim()||'main',token=$('#ghToken').value.trim();
   if(!owner||!repo||!token){setStatus('Enter the GitHub owner, repository and token first.','err');return}
@@ -199,6 +226,7 @@ $('#clearProgramQr').onclick=()=>{data.programQr='';$('#programQr').value='';pre
 // Render the editable menu first so a publishing-control problem can never hide product editing.
 bindTop();
 renderSections();
+renderSponsors();
 bindQrUpload('paymentQrUpload','paymentQr','paymentQrPreview');
 bindQrUpload('programQrUpload','programQr','programQrPreview');
 $('#ghToken').value=sessionStorage.getItem('kennedyGhToken')||'';
