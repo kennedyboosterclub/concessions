@@ -10,3 +10,15 @@ Changes in v9:
 - GitHub Test Connection and direct Publish remain enabled.
 
 Upload all files/folders over the existing GitHub repository files, including menu-data.js and assets. Then open editor.html?v=9 to bypass cache.
+
+
+## v10
+- Hot Food descriptions now render beneath item names on the TV board.
+- Descriptions automatically scale and are limited to two lines to preserve the 16:9 layout.
+
+
+## v11 description improvements
+- Every product category supports descriptions on the TV board.
+- Editor shows a live character counter; 80 characters or fewer is recommended for best TV readability.
+- Description inputs allow up to 120 characters so slightly longer notes can still be saved.
+- Longer descriptions are visually limited to two lines on the TV board to protect the 16:9 layout.
