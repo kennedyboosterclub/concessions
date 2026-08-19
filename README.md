@@ -11,3 +11,11 @@ Editor guidance:
 Descriptions continue to display for Hot Food, Drinks, Snacks, Candy, Breakfast, and Meal Deals.
 
 This patch intentionally does NOT include `menu-data.js` or the `assets` folder, so uploading these files will not overwrite the live menu data or product images already in GitHub.
+
+
+## v14 layout update
+Candy now uses the large right-side menu panel for longer candy descriptions. Breakfast has moved to the smaller lower center panel beneath Snacks. All editor, image, stock, description, and GitHub publishing features remain unchanged.
+
+
+## v15 item reordering
+Every editable section now includes Move Up and Move Down buttons. Reordering changes the array order in menu-data.js, so the TV display follows the exact editor order after publishing. This applies to Hot Food, Drinks, Snacks, Candy, Breakfast, and Meal Deals.
