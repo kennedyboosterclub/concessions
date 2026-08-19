@@ -22,3 +22,11 @@ Upload all files/folders over the existing GitHub repository files, including me
 - Editor shows a live character counter; 80 characters or fewer is recommended for best TV readability.
 - Description inputs allow up to 120 characters so slightly longer notes can still be saved.
 - Longer descriptions are visually limited to two lines on the TV board to protect the 16:9 layout.
+
+
+## v12 description guidance
+- Product descriptions may use up to 3 visible TV lines.
+- Editor recommends 120 characters for readability.
+- Counter is green through 120 characters, yellow from 121-150, and red from 151-180.
+- The editor allows up to 180 characters total.
+- Descriptions render for Hot Food, Drinks, Snacks, Candy, Breakfast, and Meal Deals.
