@@ -60,7 +60,21 @@
 </div>
 <script>
 const original=window.KENNEDY_MENU||{};
-let data=JSON.parse(JSON.stringify(original));
+const EDITOR_DRAFT_KEY='kennedyEditorDraftV22';
+const EDITOR_DRAFT_TIME_KEY='kennedyEditorDraftV22SavedAt';
+let restoredDraft=false;
+let data;
+try{
+  const saved=localStorage.getItem(EDITOR_DRAFT_KEY);
+  if(saved){
+    const parsed=JSON.parse(saved);
+    if(parsed&&typeof parsed==='object'){
+      data=parsed;
+      restoredDraft=true;
+    }
+  }
+}catch(e){}
+if(!data)data=JSON.parse(JSON.stringify(original));
 function migrateV9(){if((data.schemaVersion||0)>=9)return;data.breakfast=Array.isArray(data.breakfast)?data.breakfast:[];data.snacks=Array.isArray(data.snacks)?data.snacks:[];const u=data.snacks.find(i=>/UNCRUSTABLE/i.test(i.name||''));if(u&&!data.breakfast.some(i=>/UNCRUSTABLE/i.test(i.name||''))){data.breakfast.push(u);data.snacks=data.snacks.filter(i=>i!==u)}if(!data.breakfast.some(i=>/DONUT/i.test(i.name||'')))data.breakfast.push({name:'DONUTS',price:'2',description:'',image:'assets/donuts.svg',outOfStock:false});data.drinks=Array.isArray(data.drinks)?data.drinks:[];if(!data.drinks.some(i=>/COFFEE/i.test(i.name||'')))data.drinks.push({name:'COFFEE',price:'2',description:'',image:'assets/coffee.svg',outOfStock:false});if(!data.drinks.some(i=>/RED BULL/i.test(i.name||'')))data.drinks.push({name:'RED BULL',price:'4',description:'',image:'assets/redbull.svg',outOfStock:false});data.schemaVersion=9;}
 migrateV9();
 if(!Array.isArray(data.sponsors))data.sponsors=[];
@@ -138,7 +152,17 @@ function renderSponsors(){
   redraw();card.querySelector('.add-sponsor').onclick=()=>{data.sponsors.push({name:'NEW SPONSOR',message:'Thank you for supporting Kennedy Football!',image:'',active:true});redraw();refreshPreview()};root.appendChild(card);
 }
 function menuJs(){return 'window.KENNEDY_MENU = '+JSON.stringify(data,null,2)+';\n'}
-function refreshPreview(){localStorage.setItem('kennedyPreviewData',JSON.stringify(data));$('#preview').src='index.html?preview='+Date.now()}
+function saveWorkingDraft(){
+  try{
+    const json=JSON.stringify(data);
+    localStorage.setItem(EDITOR_DRAFT_KEY,json);
+    localStorage.setItem(EDITOR_DRAFT_TIME_KEY,String(Date.now()));
+    localStorage.setItem('kennedyPreviewData',json);
+  }catch(e){
+    setStatus('The editor could not save a local draft. This can happen if browser storage is full because of many embedded images. Publish your changes before refreshing.','err');
+  }
+}
+function refreshPreview(){saveWorkingDraft();$('#preview').src='index.html?preview='+Date.now()}
 function downloadText(name,text,type){const blob=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 function utf8ToBase64(text){const bytes=new TextEncoder().encode(text);let binary='';const chunk=0x8000;for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));return btoa(binary)}
 async function githubRequest(url,token,opts={}){
@@ -206,7 +230,7 @@ $('#previewBtn').onclick=refreshPreview;
 $('#download').onclick=()=>downloadText('menu-data.js',menuJs(),'text/javascript');
 $('#exportJson').onclick=()=>downloadText('kennedy-menu-backup.json',JSON.stringify(data,null,2),'application/json');
 $('#importJson').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);bindTop();renderSections();renderSponsors();refreshPreview();setStatus('Backup restored.','ok')}catch(err){setStatus('That backup file could not be read.','err')}};r.readAsText(f)};
-$('#reset').onclick=()=>{if(confirm('Reset all menu edits back to the currently published menu?')){data=JSON.parse(JSON.stringify(original));bindTop();renderSections();renderSponsors();refreshPreview()}};
+$('#reset').onclick=()=>{if(confirm('Reset all menu edits back to the currently published menu?')){localStorage.removeItem(EDITOR_DRAFT_KEY);localStorage.removeItem(EDITOR_DRAFT_TIME_KEY);data=JSON.parse(JSON.stringify(original));bindTop();renderSections();renderSponsors();refreshPreview();setStatus('Editor reset to the menu version loaded from GitHub Pages.','ok')}};
 const testGithubBtn=$('#testGithub'); if(testGithubBtn) testGithubBtn.onclick=async()=>{
   const owner=$('#ghOwner').value.trim(),repo=$('#ghRepo').value.trim(),branch=$('#ghBranch').value.trim()||'main',token=$('#ghToken').value.trim();
   if(!owner||!repo||!token){setStatus('Enter the GitHub owner, repository and token first.','err');return}
@@ -221,6 +245,10 @@ const testGithubBtn=$('#testGithub'); if(testGithubBtn) testGithubBtn.onclick=as
 };
 $('#publish').onclick=publish;
 $('#forgetToken').onclick=()=>{$('#ghToken').value='';sessionStorage.removeItem('kennedyGhToken');setStatus('GitHub token forgotten for this browser session.','ok')};
+// Persist ordinary editor field changes even when they do not require an immediate preview redraw.
+document.addEventListener('input',()=>{setTimeout(saveWorkingDraft,0)},true);
+document.addEventListener('change',()=>{setTimeout(saveWorkingDraft,0)},true);
+
 $('#clearPaymentQr').onclick=()=>{data.paymentQr='';$('#paymentQr').value='';previewImg($('#paymentQrPreview'),'')};
 $('#clearProgramQr').onclick=()=>{data.programQr='';$('#programQr').value='';previewImg($('#programQrPreview'),'')};
 // Render the editable menu first so a publishing-control problem can never hide product editing.
