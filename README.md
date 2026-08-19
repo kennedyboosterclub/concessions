@@ -19,3 +19,7 @@ Candy now uses the large right-side menu panel for longer candy descriptions. Br
 
 ## v15 item reordering
 Every editable section now includes Move Up and Move Down buttons. Reordering changes the array order in menu-data.js, so the TV display follows the exact editor order after publishing. This applies to Hot Food, Drinks, Snacks, Candy, Breakfast, and Meal Deals.
+
+
+## v16 Candy row update
+Candy now renders like the other product categories: each item has its own image, item name, up to three lines of description, and price. The old decorative category image under the Candy heading has been removed.
