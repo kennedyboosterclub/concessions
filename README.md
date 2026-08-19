@@ -1,32 +1,13 @@
-# Kennedy Concessions v9
+# Kennedy Concessions v13 – Larger TV Descriptions
 
-Changes in v9:
-- Hot Food now uses the correct available height and dynamically fits added items instead of clipping the bottom row.
-- Game Day Fuel is replaced by an editable Breakfast category.
-- Uncrustables moved to Breakfast and Donuts $2 added.
-- Coffee $2 and Red Bull $4 added to Drinks.
-- Meal Deals dynamically render as 2 or 3 equal columns; editor limits Meal Deals to a maximum of 3.
-- Existing In Stock / Out of Stock controls remain available for every item.
-- GitHub Test Connection and direct Publish remain enabled.
+This patch increases product-description text size while preserving the three-line limit and current 16:9 layout.
 
-Upload all files/folders over the existing GitHub repository files, including menu-data.js and assets. Then open editor.html?v=9 to bypass cache.
+Editor guidance:
+- Green: 0–150 characters (recommended)
+- Yellow: 151–180 characters
+- Red: 181–210 characters
+- Maximum: 210 characters
 
+Descriptions continue to display for Hot Food, Drinks, Snacks, Candy, Breakfast, and Meal Deals.
 
-## v10
-- Hot Food descriptions now render beneath item names on the TV board.
-- Descriptions automatically scale and are limited to two lines to preserve the 16:9 layout.
-
-
-## v11 description improvements
-- Every product category supports descriptions on the TV board.
-- Editor shows a live character counter; 80 characters or fewer is recommended for best TV readability.
-- Description inputs allow up to 120 characters so slightly longer notes can still be saved.
-- Longer descriptions are visually limited to two lines on the TV board to protect the 16:9 layout.
-
-
-## v12 description guidance
-- Product descriptions may use up to 3 visible TV lines.
-- Editor recommends 120 characters for readability.
-- Counter is green through 120 characters, yellow from 121-150, and red from 151-180.
-- The editor allows up to 180 characters total.
-- Descriptions render for Hot Food, Drinks, Snacks, Candy, Breakfast, and Meal Deals.
+This patch intentionally does NOT include `menu-data.js` or the `assets` folder, so uploading these files will not overwrite the live menu data or product images already in GitHub.
