@@ -7,7 +7,8 @@ window.KENNEDY_MENU = {
     {
       "name": "HOT DOG",
       "price": "3",
-      "image": "assets/hotdog.png"
+      "image": "assets/hotdog.png",
+      "description": "All Beef Hotdogs (no pork)"
     },
     {
       "name": "CHIPS",
@@ -77,7 +78,7 @@ window.KENNEDY_MENU = {
       "name": "RICE CRISPY BARS",
       "price": "1",
       "image": "assets/ricecrispy.png",
-      "outOfStock": false
+      "outOfStock": true
     },
     {
       "name": "GRANOLA BARS",
