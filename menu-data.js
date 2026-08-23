@@ -21,13 +21,14 @@ window.KENNEDY_MENU = {
       "name": "PIZZA SLICE",
       "price": "5",
       "image": "assets/pizza.png",
-      "description": "Pepperoni or Cheese"
+      "description": "Cheese"
     },
     {
       "name": "NACHOS & CHEESE",
       "price": "4",
       "image": "assets/nachos.png",
-      "description": "Includes: 1 Cheese and 1 Jalapeño. Extra Cheese $1.00 and Extra Jalapeños $.50"
+      "description": "Includes: 1 Cheese and 1 Jalapeño. Extra Cheese $1.00 and Extra Jalapeños $.50",
+      "outOfStock": true
     },
     {
       "name": "POPCORN",
