@@ -21,7 +21,8 @@ window.KENNEDY_MENU = {
       "name": "PIZZA SLICE",
       "price": "5",
       "image": "assets/pizza.png",
-      "description": "Cheese and Pepperoni"
+      "description": "Chees, Pepperoni, or 4 Meat",
+      "outOfStock": false
     },
     {
       "name": "NACHOS & CHEESE",
