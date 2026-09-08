@@ -22,7 +22,7 @@ window.KENNEDY_MENU = {
       "price": "5",
       "image": "assets/pizza.png",
       "description": "Chees, Pepperoni, or 4 Meat",
-      "outOfStock": false
+      "outOfStock": true
     },
     {
       "name": "NACHOS & CHEESE",
