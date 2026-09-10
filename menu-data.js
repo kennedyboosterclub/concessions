@@ -163,7 +163,7 @@ window.KENNEDY_MENU = {
       "outOfStock": false
     }
   ],
-  "showPayments": true,
+  "showPayments": false,
   "payments": "CASH • CARD • VENMO",
   "paymentQr": "",
   "showProgram": true,
