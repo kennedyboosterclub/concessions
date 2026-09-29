@@ -34,7 +34,8 @@ window.KENNEDY_MENU = {
     {
       "name": "POPCORN",
       "price": "2",
-      "image": "assets/popcorn.png"
+      "image": "assets/popcorn.png",
+      "outOfStock": true
     }
   ],
   "drinks": [
